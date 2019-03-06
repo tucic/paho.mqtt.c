@@ -792,3 +792,25 @@ TARGET_LINK_LIBRARIES(
 	test_issue373
 	paho-mqtt3a
 )
+
+IF (PAHO_WITH_SSL)
+    ADD_EXECUTABLE(
+            test_issue604
+            test_issue604.c
+    )
+
+    TARGET_LINK_LIBRARIES(
+            test_issue604
+            paho-mqtt3cs
+    )
+
+    ADD_TEST(
+            NAME test_issue604-1-client_reconnect_on_connectionLost
+            COMMAND "test11" "--test_no" "1" "--connection" ${MQTT_TEST_BROKER}
+    )
+
+    SET_TESTS_PROPERTIES(
+            test_issue604-1-client_reconnect_on_connectionLost
+            PROPERTIES TIMEOUT 540
+    )
+ENDIF(PAHO_WITH_SSL)
